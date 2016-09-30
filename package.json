@@ -1,0 +1,27 @@
+{
+  "name": "manage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Momo707577045/manage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Momo707577045/manage/issues"
+  },
+  "homepage": "https://github.com/Momo707577045/manage#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-sass":"^2.14.12",
+    "gulp-livereload":"^3.8.1",
+    "http-proxy":"^1.13.2"
+  }
+}

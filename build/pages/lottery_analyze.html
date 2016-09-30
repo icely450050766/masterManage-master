@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>师傅之家</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../ace/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../ace/assets/font-awesome/4.2.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../ace/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="../ace/assets/css/daterangepicker.min.css"/>
+    <!--日期选择插件-->
+    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/myStyle.css"/>
+    <link rel="stylesheet" href="./css/font-awesome.min.css"/>
+    <!--公共css-->        <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../ace/assets/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <link rel="stylesheet" href="../ace/assets/css/ace-ie.min.css"/>        <![endif]-->
+
+    <!-- ace 设置处理程序 -->
+    <script src="../ace/assets/js/ace-extra.min.js"></script>
+    <!--[if lte IE 8]>
+    <script src="../ace/assets/js/html5shiv.min.js"></script>
+    <script src="../ace/assets/js/respond.min.js"></script>        <![endif]-->
+
+</head>
+<!--<body class="no-skin">-->
+<body class="no-skin" onload="init()">
+<!--顶部header占位符-->
+<div id="header"></div>
+<!--内容容器-->
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <div id="sidebar" class="sidebar responsive"></div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!--内容区的顶部路径栏-->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        签到抽奖
+                    </li>
+                    <li>抽奖活动管理</li>
+                </ul>
+            </div>
+
+            <!--主体内容存放区Momo -->
+            <div class="page-content">
+
+                <div class="page-header">
+
+                    <!-- 搜索框 -->
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="sr-only" for="searchType">searchType</label>
+                            <select class="form-control" id="searchType" style="width: 150px;">
+                                <option value="0">不按活动统计</option>
+                                <option value="1">按活动统计</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group" style="width: 250px">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input id="searchTime" class="form-control" placeholder="开始时间-结束时间" type="text" name="date-range-picker" id="id-date-range-picker-1"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="searchName">searchName</label>
+                            <input id="searchName" type="text" placeholder="活动名称"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="searchIDText">searchIDText</label>
+                            <input id="searchIDText" type="text" placeholder="编码"/>
+                        </div>
+
+                        <div class="searchBtn btn btn-sm btn-primary width80">查询</div>
+                        <div class="resetBtn btn btn-sm btn-inverse width80">重置</div>
+                    </form>
+
+                </div>
+
+                <!--主体表格信息-->
+                <div class="tab1">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-5">参与次数</th>
+                                        <th class="col-md-5">金额</th>
+                                        <th class="col-md-1">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="joinNum">0</td>
+                                        <td class="sumMoney">0</td>
+                                        <td>
+                                            <a class="logHref" href="lottery_log.html">
+                                                <span class="btn btn-mini btn-primary">明细</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="empty" style="display: none"><h3 class="no-comments center">
+                                <i class="fa fa-exclamation-circle red" style="padding-right:8px"></i>无相关数据记录</h3></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--momo 表格（隐藏）-->
+                <div class="tab2" style="display: none">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table id="sample-table-1" class="table table-striped table-bordered table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>活动编码</th>
+                                        <th>活动名称</th>
+                                        <th>参与次数</th>
+                                        <th>金额</th>
+                                        <th class="col-md-1">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="itemGroup"></tbody>
+                                </table>
+                            </div>
+                            <div class="empty" style="display: none"><h3 class="no-comments center">
+                                <i class="fa fa-exclamation-circle red" style="padding-right:8px"></i>无相关数据记录</h3></div>
+                        </div>
+                    </div>
+
+                    <!--底部页面选择栏-->
+                    <div class="pull-left marginTop20 fontSize15">每页显示 <span class="pageItemNum">10</span> 项，总
+                        <span class="sumItemNum">10</span> 项
+                    </div>
+                    <div class="pull-right">
+                        <div>
+                            <ul class="pagination ">
+                                <li class="prevBtn disabled"><span class="ace-icon fa fa-angle-double-left"></span></li>
+                                <li class="nextBtn"><span class="ace-icon fa fa-angle-double-right"></span></li>
+                                <li><span id="maxPageNum" class="hidden"></span></li>
+                                <li><input id="inputPageNum" class="width60" type="number" min="1" placeholder="页数"/>
+                                </li>
+                                <li>
+                                    <div id="pageJump" class="btn btn-primary btn-sm width60">跳转</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--icely 表格-->
+                <div id="jqGrid" class="jqGrid jqGrid-center jqGrid-stripe"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i></a>
+<!-- /.main-container -->
+
+<!--模板信息-->
+<script type="text/template" id="item">
+    <tr>
+        <td><%=index%></td>
+        <td class="id"><%=id%></td>
+        <td class="name"><%=name%></td>
+        <td><%=joinNum%></td>
+        <td><%=moneyNum%></td>
+        <td><span class="jumpBtn btn btn-mini btn-primary">明细</span></td>
+    </tr>
+</script>
+
+<!-- bootstrap -->
+<script src="../ace/assets/js/jquery.1.11.1.min.js"></script>
+<script src="../ace/assets/js/bootstrap.min.js"></script>
+<!-- 日期选择插件 -->
+<script src="../ace/assets/js/moment.min.js"></script>
+<script src="../ace/assets/js/daterangepicker.min.js"></script>
+<!-- ACE 基本JS -->
+<script src="../ace/assets/js/ace-elements.min.js"></script>
+<script src="../ace/assets/js/ace.min.js"></script>
+<script src="./js/libs/hint.js"></script>
+<!-- 公共JS -->
+<script src="./js/momo.js"></script>
+<script src="./js/lottery_analyze.js"></script>
+
+
+<!--icely add-->
+
+<link href="js/jqGrid/jqGrid/jqGrid.css" rel="stylesheet" type="text/css">
+<script src="js/jqGrid/jqGrid/jqGrid.js"></script>
+
+<script>
+
+    var lottery = (function($){
+        return{
+
+            tableObj : null,
+            //type : null,
+
+            // 初始化
+            init: function(){
+                type = momo.getURLElement('type');
+                momo.initPage();// 左边菜单栏
+                this.initTable();// 初始化表格
+                this.addBtnEvent();// 给“搜索”“重置”按钮添加点击事件
+                $('.searchBtn').trigger('click');// 模拟点击，初始化内容
+            },
+
+            // 初始化表格
+            initTable: function(){
+                var url = 'http://119.29.169.29/devzhaoshifu/admin.php/Lottery/stastics';
+                var editUrl = '';
+                var colName = ['活动编码','活动名称','参与次数','金额','操作'];
+                var colModal = [
+                    { index: 'id', width:20, sort: false },
+                    { index: 'name', width:20, sort: false },
+                    { index: 'count', width:30, sort: false},
+                    { index: 'amount', width:20, sort: false },
+                    { index: 'id', width:25, sort: false, formatter: setOperate },// 传入id，操作表单
+                ];
+
+                var data = {
+                    "type": type,
+                    "group": 1,
+                };
+                this.tableObj = new $.jqGrid( $('#jqGrid'), url, data, colName, colModal, '400px', false, true, editUrl );
+
+                // （辅助函数）设置操作
+                function setOperate( val, rowData ){
+                    return '<a class="updateItem btn btn-mini btn-primary" href="./lottery_log.html?type=' + type + '&id=' + val + '&name=' + rowData.name + '">明细</a>';
+                }
+            },
+
+            // 给“搜索”“重置”按钮添加点击事件
+            addBtnEvent: function(){
+
+                var _self = this;
+
+                // 点击搜索按钮
+                $('.searchBtn').click( function(){
+
+                    var _type = parseInt( $('#searchType').val() );// 下拉列表类型
+
+                    // 根据下拉列表，决定显示哪个表格
+                    if( _type ){
+
+                        $('.tab1').hide();
+                        $('#jqGrid').show();
+
+                        // 请求数据
+                        var _timeArr = $('#searchTime').val().split(' - ');
+                        var _startTime = _timeArr[0];
+                        var _endTime = _timeArr[1];
+                        //console.log( _timeArr );
+
+                        var _name = $('#searchName').val();
+                        var _lottery_id = $('#searchIDText').val();
+
+                        var _data = {
+                            "start": _startTime,
+                            "end": _endTime,
+                            "name": _name,
+                            "lottery_id": _lottery_id,
+                        };
+                        this.tableObj.reloadData( _data, true );// 重新载入表格 的数据
+
+                    }else{
+
+                        $('.tab1').show();
+                        $('#jqGrid').hide();
+
+                        // 请求数据
+                        var url = './Lottery/stastics';
+                        var data = {
+                            "type": type,
+                            "group": 0,
+                        };
+                        momo.sendPost(data, url, function( data ){
+                            $(".tab1 .joinNum").text(data.data.count);
+                            $(".tab1 .sumMoney").text(data.data.amount);
+
+                            // 点击“明细”跳转
+                            $('.tab1 .logHref').attr('href', 'lottery_log.html?type=' + type)
+                        });
+                    }
+
+                }.bind( this ));
+
+                // 点击重置按钮
+                $('.resetBtn').click( function(){
+
+                    $('#searchTime').val('');
+                    $('#searchName').val('');
+                    $('#searchIDText').val('');
+                });
+            },
+
+        }
+    })(jQuery);
+
+    var init = lottery.init.bind( lottery );
+//    lottery.init();
+</script>
+
+</body>
+</html>

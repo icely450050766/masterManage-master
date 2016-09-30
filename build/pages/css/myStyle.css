@@ -1,0 +1,6 @@
+input[type=text],
+input[type=date],
+input[type=number],
+select{
+    width: 100%;
+}
