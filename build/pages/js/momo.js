@@ -9,6 +9,17 @@ var momo = (function () {
             Example.init({"selector": ".bb-alert"});
             $("body").append("<div class='loader' style='display: none;'><div class='loader-inner line-scale'><div></div><div></div><div></div><div></div><div></div></div></div>");//正在加载提示
             $("#header").load('iframe/header.html');
+
+            // icely add （左边菜单 height 满屏）
+            $(window).load( setMenuHeight );
+            $(document).scroll( setMenuHeight );
+            function setMenuHeight(){
+                var _height = document.getElementsByClassName('main-content')[0].clientHeight;
+                _height = _height < $(window).height() ? $(window).height() : _height;// 二者之中选最高的
+                //console.log(_height);
+                $('#sidebar').css( 'height', _height + 'px' );
+            }
+
             $("#sidebar").load('iframe/sidebar.html', function () { //侧栏页面打开
                 //获取左侧菜单a，并判断是否匹配
                 function sidebarList() {
@@ -19,11 +30,13 @@ var momo = (function () {
                         if (pageName.indexOf(aHref) != -1) {
                             aItem.parents('li').addClass('open');
                             aItem.parents('ul').show();
+
+                            // icely add 选中的菜单项设置背景色
+                            $('#sidebar .active').removeClass('active');
+                            aItem.addClass('active');
                         }
                     }
                 }
-
-
                 var pageName = "";
                 if ($('body').hasClass('routing'))pageName = $('.routing').attr('data-route');//为不存在侧栏的Page准备
                 else {

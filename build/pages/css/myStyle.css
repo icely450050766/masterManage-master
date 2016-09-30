@@ -4,3 +4,43 @@ input[type=number],
 select{
     width: 100%;
 }
+
+
+/* ÐÞ¸ÄÑùÊ½ */
+.breadcrumbs{
+    border-bottom: none;
+    background: inherit;
+    padding-top: 1%;
+}
+.page-content{
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 1% 2%;
+    padding: 0%;
+}
+.page-content .page-header{
+    background-color: rgb(74,144,226);
+    font-size: 16px;
+    color: #ffffff;
+    padding: 0.6% 1%;
+    margin: 0px;
+    overflow: hidden;
+}
+.page-content .page-header > i{
+    margin-right: 0.5%;
+    font-size: inherit;
+}
+.page-content .page-header > .operatorBtn{
+    float: right;
+    background: inherit;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 5px;
+    padding: 0.1% 1.5%;
+}
+.page-content .page-body{
+    padding: 1%;
+}
+.page-content .page-body form.form-inline{
+    margin-bottom: 1.5%;
+}
