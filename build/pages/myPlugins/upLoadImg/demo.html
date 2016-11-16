@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="upLoadImg.css"/>
+
+    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="upLoadImg.js"></script>
+</head>
+<body>
+    <div id="pictureBox"></div>
+
+    <script>
+
+        // 初始化已有图片
+        $('#pictureBox').html('<div class="imgBox"><img src=""><div class="removeImg">&times;</div></div>');
+
+        // 添加图片按钮
+        var pictureBox =  new upLoadImg( $('#pictureBox'), 3 );
+
+        // 上传图片
+        // pictureBox.upLoadAll();
+        pictureBox.$upLoadBtn.one( 'upLoadFinish', function(e){
+            console.log('上传成功！');
+        });
+    </script>
+</body>
+</html>

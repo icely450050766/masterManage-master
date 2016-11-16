@@ -1,0 +1,403 @@
+<!--<body class="no-skin" onload="sessionStorage._type='2';init()">-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>师傅之家</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../../ace/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../ace/assets/font-awesome/4.2.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../ace/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="../../ace/assets/css/daterangepicker.min.css"/>
+    <!--日期选择插件-->
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <!--公共css-->        <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../../ace/assets/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <link rel="stylesheet" href="../../ace/assets/css/ace-ie.min.css"/>        <![endif]-->
+
+    <!--icely add-->
+    <link rel="stylesheet" href="../css/myStyle.css"/>
+    <link rel="stylesheet" href="../myPlugins/loading/loading.css"/>
+    <link rel="stylesheet" href="../myPlugins/upLoadImg/upLoadImg.css"/>
+    <link href="../myPlugins/jqGrid/jqGrid/jqGrid.css" rel="stylesheet" type="text/css">
+
+    <!-- ace 设置处理程序 -->
+    <script src="../../ace/assets/js/ace-extra.min.js"></script>
+    <!--[if lte IE 8]>
+    <script src="../../ace/assets/js/html5shiv.min.js"></script>
+    <script src="../../ace/assets/js/respond.min.js"></script>        <![endif]-->
+
+</head>
+
+<style>
+
+    /*头部导航*/
+    .page-header{
+        padding: 0px !important;
+        border-bottom: none;
+    }
+    .page-header .tabs{
+        padding: 0px;
+        margin: 0px;
+        background: rgb(245,245,245);
+    }
+    .page-header .tabs > li{
+        display: inline-block;
+        color: #000000;
+        padding: 0.8% 3%;
+        cursor: pointer;
+    }
+    .page-header .tabs > li.active{
+        background: #ffffff;
+        color: rgb(74,144,226);
+    }
+
+    /*内容部分*/
+    .page-body{
+        background: #ffffff;
+    }
+    .page-body .tabs-content > div{
+        display: none;
+    }
+    .page-body .tabs-content > div.active{
+        display: block;
+    }
+    .editModal-content > .row,
+    .page-body .tabs-content > div .row{
+        margin: 2% 0% !important;
+    }
+
+    /*模态框*/
+    .editModal-content{
+        padding: 2% 3%;
+    }
+
+</style>
+
+<body class="no-skin" onload="init()">
+<!--顶部header占位符-->
+<div id="header"></div>
+<!--内容容器-->
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <div id="sidebar" class="sidebar responsive"></div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!--内容区的顶部路径栏-->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        营销管理
+                    </li>
+                    <li>净水器</li>
+                    <li>设置</li>
+                </ul>
+            </div>
+
+            <div class="page-content">
+
+                <div class="page-header">
+                    <ul class="tabs">
+                        <li>产品介绍</li>
+                        <li>免费领取</li>
+                        <li>更换滤芯</li>
+                        <li>维修服务</li>
+                    </ul>
+                </div>
+
+                <div class="page-body">
+                    <div class="tabs-content">
+
+                        <!--产品介绍-->
+                        <div>
+
+                            <div class="row">
+                                <div class="col-md-2">净水器产品图片：</div>
+                                <div class="col-md-10" id="projectImg"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">产品介绍：<br/>（可添加6张图片）</div>
+                                <div class="col-md-10" id="othersImg"></div>
+                            </div>
+
+                            <div class="row textAlignCenter">
+                                <button class="saveBtn btn btn-sm btn-primary width80">保存</button>
+                            </div>
+
+                        </div>
+
+                        <!--免费领取-->
+                        <div>
+                            <div style="width: 70%; margin: 2% auto;">
+
+                                <div class="row">
+                                    <div class="col-md-3 textAlignRight">净水器名称：</div>
+                                    <div class="col-md-8">
+                                        <input type="text" min="0" placeholder="名字限10个字以内" class="actually_name" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 textAlignRight">净水器价格：</div>
+                                    <div class="col-md-8">
+                                        <input type="number" min="0" placeholder="请输入非负整数" class="actually_price" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 textAlignRight">活动价：</div>
+                                    <div class="col-md-8">
+                                        <input type="number" min="0" placeholder="请输入非负整数" class="activity_price" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 textAlignRight">活动时间：</div>
+                                    <div class="col-md-8">
+                                        <input type="number" min="0" placeholder="从注册日开始起算（单位：天）" class="activity_day" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 textAlignRight">固定收费项目：</div>
+                                    <div class="col-md-8">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-5">项目名称</th>
+                                                <th class="col-md-5">价格</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" min="0" class="deliver_name" placeholder="上门送货费名称" readonly></td>
+                                                <td><input type="number" min="0" placeholder="上门送货费金额" class="deliver_price" readonly></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" min="0" class="install_name" placeholder="现场安装费名称" readonly></td>
+                                                <td><input type="number" min="0" placeholder="现场安装费金额" class="install_price" readonly></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 textAlignRight">活动说明：</div>
+                                    <div class="col-md-8">
+                                        <textarea type="text" min="0" class="description" placeholder="100个字以内" style="width: 100%; height: 80px;" readonly></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row textAlignCenter">
+                                    <div class="editBtn btn btn-sm btn-primary width80">编辑</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--更换滤芯-->
+                        <div>
+
+                            <div style="margin: 1% 0%; overflow: hidden;">
+                                <div class="floatLeft textAlignLeft" style="width: 80%">
+
+                                    <form class="form-inline" role="form">
+                                        <div class="form-group">
+                                            <label class="sr-only">none</label>
+                                            <p class="form-control-static">上门服务费配置：</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="service_price_name" class="sr-only">service_price_name</label>
+                                            <input type="text" id="service_price_name" class="service_price_name configName" placeholder="名称（不超过10字）">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="service_price_price" class="sr-only">service_price_price</label>
+                                            <input type="number" id="service_price_price" class="service_price_price configPrice" placeholder="金额（保留两位小数）" min="0">
+                                        </div>
+
+                                        <div class="form-group" style="margin-left: 15px;">
+                                            <label class="sr-only">none</label>
+                                            <p class="form-control-static">更换时间建议：</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="replace_suggest_day" class="sr-only">replace_suggest_day</label>
+                                            <input type="number" id="replace_suggest_day" class="replace_suggest_day configDay" placeholder="单位：天（正整数）" min="1" >
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <div class="floatRight textAlignRight" style="width: 20%">
+                                    <button class="btn btn-sm btn-primary width80 newOne changeNew" style="margin-right: 0.5%;">新建</button>
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-bordered table-hover dataTable textAlignCenter">
+                                <thead>
+                                <tr>
+                                    <th class="textAlignCenter">序号</th>
+                                    <th class="textAlignCenter">项目名称</th>
+                                    <th class="textAlignCenter">价格（元）</th>
+                                    <th class="textAlignCenter">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="changeTbody"></tbody>
+                            </table>
+
+                            <div class="row textAlignCenter">
+                                <button class="saveBtn btn btn-sm btn-primary width80">保存</button>
+                            </div>
+                        </div>
+
+                        <!--维修服务-->
+                        <div>
+
+                            <div style="margin: 1% 0%; overflow: hidden;">
+                                <div class="floatLeft textAlignLeft" style="width: 80%">
+                                    <form class="form-inline" role="form">
+                                        <div class="form-group">
+                                            <label class="sr-only">none</label>
+                                            <p class="form-control-static">上门维修费配置：</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="repair_price_name" class="sr-only">repair_price_name</label>
+                                            <input type="text" id="repair_price_name" class="repair_price_name configName" placeholder="名称（不超过10字）" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="repair_price_price" class="sr-only">repair_price_price</label>
+                                            <input type="number" id="repair_price_price" class="repair_price_price configPrice" placeholder="金额（保留两位小数）" min="0">
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="floatRight textAlignRight" style="width: 20%">
+                                    <button class="btn btn-sm btn-primary width80 newOne repairNew" style="margin-right: 0.5%;">新建</button>
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-bordered table-hover dataTable textAlignCenter">
+                                <thead>
+                                <tr>
+                                    <th class="textAlignCenter">序号</th>
+                                    <th class="textAlignCenter">项目名称</th>
+                                    <th class="textAlignCenter">价格（元）</th>
+                                    <th class="textAlignCenter">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="repairTbody"></tbody>
+                            </table>
+
+                            <div class="row textAlignCenter">
+                                <button class="saveBtn btn btn-sm btn-primary width80">保存</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i></a>
+<!-- /.main-container -->
+
+<!-- （无用）表格上方 配置 编辑模态框 -->
+<script type="text/template" id="editConfigModal">
+
+    <div class="editModal-content">
+
+        <div class="row">
+            <div class="col-md-2">名称</div>
+            <div class="col-md-10">
+                <input type="text" class="editName" id="configName" placeholder="不超过10字">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">金额</div>
+            <div class="col-md-10">
+                <input type="number" min="0" class="editPrice" placeholder="保留两位小数，最高8位（不包括小数点后两位）">
+            </div>
+        </div>
+
+        <div class="row" id="dayRow">
+            <div class="col-md-2">更换时间</div>
+            <div class="col-md-10">
+                <input type="number" min="1" class="editDay" id="configDay" placeholder="请输入正整数">
+            </div>
+        </div>
+
+    </div>
+
+</script>
+
+<!-- 表格某一项 编辑模态框 -->
+<script type="text/template" id="editModal">
+
+    <div class="editModal-content">
+
+        <div class="row">
+            <div class="col-md-2">项目名称</div>
+            <div class="col-md-10">
+                <input type="text" class="editName" placeholder="不超过20字">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">价格</div>
+            <div class="col-md-10">
+                <input type="number" min="0" class="editPrice" placeholder="保留两位小数，最高8位（不包括小数点后两位）">
+            </div>
+        </div>
+
+    </div>
+
+</script>
+
+<!-- bootstrap -->
+<script src="../../ace/assets/js/jquery.1.11.1.min.js"></script>
+<script src="../../ace/assets/js/bootstrap.min.js"></script>
+<!-- 日期选择插件 -->
+<script src="../../ace/assets/js/moment.min.js"></script>
+<script src="../../ace/assets/js/daterangepicker.min.js"></script>
+<!-- ACE 基本JS -->
+<script src="../../ace/assets/js/ace-elements.min.js"></script>
+<script src="../../ace/assets/js/ace.min.js"></script>
+<script src="../js/libs/hint.js"></script>
+<script src="../../ace/assets/js/bootbox.min.js"></script>
+<!-- 公共JS -->
+<script src="../js/momo.js"></script>
+
+<!--icely add-->
+<script src="../myPlugins/jqGrid/jqGrid/jqGrid.js"></script>
+<script src="../myPlugins/loading/loading.js"></script>
+<script src="../myPlugins/upLoadImg/upLoadImg.js"></script>
+<script src="setting.js"></script>
+
+</body>
+</html>

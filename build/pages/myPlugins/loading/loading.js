@@ -3,6 +3,8 @@ var loading = (function($){
     // 生成元素
     function init(){
 
+        if( $('.loading').length ) return; // 已经在显示 .loading了
+
         $('body').append('<div class="loading"><div class="loading-mark"></div></div>');
 		
         var _temp = Math.PI / 8; //  2 * PI / 16
@@ -32,12 +34,12 @@ var loading = (function($){
 
     function show(){
         init();
-        //console.log('loading show');
+        console.log('loading show');
     }
 
     function hide(){
         $('.loading').remove();
-        //console.log('loading hide');
+        console.log('loading hide');
     }
 
     return{ // 外部调用

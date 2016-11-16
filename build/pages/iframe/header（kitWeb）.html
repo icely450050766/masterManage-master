@@ -1,12 +1,11 @@
+<style>
+    .navbar{
+        background: rgb(85,85,85);
+    }
+</style>
+
 <!--顶部信息栏-->
 <div id="navbar" class="navbar navbar-default">
-    <script type="text/javascript">
-        try {
-            ace.settings.check('navbar', 'fixed')
-        } catch (e) {
-        }
-    </script>
-
     <div class="navbar-container" id="navbar-container">
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
             <span class="sr-only">Toggle sidebar</span>
@@ -21,7 +20,8 @@
         <!--标题信息-->
         <div class="navbar-header pull-left">
             <a href="index.html" class="navbar-brand">
-                <small>找师傅后台2.0</small>
+                <div style="width: 40px; height: 40px; margin-right: 3%; border-radius: 100%; background: red; float: left"></div>
+                <div style="line-height: 40px; width: 500px;"><small>找师傅后台2.0</small></div>
             </a>
         </div>
 
@@ -30,3 +30,11 @@
     <!-- /.navbar-container -->
 </div>
 <!-- basic scripts -->
+
+
+<script type="text/javascript">
+    try {
+        ace.settings.check('navbar', 'fixed')
+    } catch (e) {
+    }
+</script>

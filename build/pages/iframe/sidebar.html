@@ -1,116 +1,105 @@
-<style>
-    .sidebar {
-        width: 250px !important;
-    }
-    .main-content{
-        margin-left: 250px !important;
-    }
-    .sidebar-toggle.sidebar-collapse{
-        display: none;
-    }
-
-    .nav-list{
-        width: 98%;
-        height: 100%;
-        background: rgb(73,73,73);
-    }
-    .nav-list *{
-        font-size: 17px !important;
-        line-height: 180% !important;
-        font-weight: lighter !important;
-    }
-    .nav-list .submenu,
-    .nav-list .submenu:before,
-    .nav-list li:before {
-        border: none !important;
-        background: inherit;
-    }
-    .nav-list > li{
-        border-top-width: 0px;
-    }
-    .nav-list > li:last-child {
-        border-bottom: 1px solid rgb(130,130,130);
-    }
-    .nav-list li{
-        border-top: 1px solid rgba(0,0,0,0.7);
-    }
-    .nav-list > li li.open li{
-        border-top: 1px solid rgb(130,130,130);
-    }
-    .nav-list > li > a {
-        height: auto !important;
-    }
-
-
-    .nav-list i{
-        margin-right: 3%;;
-    }
-    .nav-list a{
-        padding: 4% 8% !important;
-        padding-right: 0% !important;
-        background: rgb(130,130,130) !important;
-        color: rgb(215,215,215) !important;
-        margin-left: 0px !important;
-        border-top: none !important;
-
-        -webkit-transition: all 0.5s;
-        -moz-transition: all 0.5s;
-        -ms-transition: all 0.5s;
-        -o-transition: all 0.5s;
-        transition: all 0.5s;
-    }
-    .nav-list > li li.open a{
-        background: rgb(73,74,75) !important;
-    }
-    .nav-list > li li a.active{
-        width: 102%;
-        background: rgb(74,144,226) !important;
-    }
-    .nav-list > li li a:hover{
-        background: rgb(74,144,226) !important;
-    }
-
-    /* 菜单 最多3层 +6*/
-    .nav-list > li > .submenu > li > a{
-        padding-left: 14% !important;
-    }
-    .nav-list > li > .submenu > li > .submenu > li > a{
-        padding-left: 20% !important;
-    }
-    .nav-list > li > .submenu > li > .submenu > li > .submenu > li > a{
-        padding-left: 26% !important;
-    }
-</style>
-
 <!--侧边功能栏-->
 <ul class="nav nav-list">
-    <li>
-        <a href="#" class="dropdown-toggle">
-            <i class="fa fa-gift"></i>签到抽奖<b class="arrow fa fa-angle-down"></b>
-        </a>
 
+    <li>
+        <a href="" class="dropdown-toggle">
+            <i class="menu-icon fa fa-tachometer"></i> <span class="menu-text"> 签到抽奖 </span>
+            <i class="arrow fa"></i>
+        </a>
         <ul class="submenu">
             <li>
-                <a href="#" class="dropdown-toggle"><i class="fa fa-home"></i>业主端 <b class="arrow fa fa-angle-down"></b></a>
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-double-angle-right"></i> 业主端 <b class="arrow fa"></b>
+                </a>
+
+                <b class="arrow"></b>
 
                 <ul class="submenu nav-hide" style="display: none;">
-                    <li><a href="lottery.html?type=1"><i class="fa fa-legal"></i>抽奖活动管理</a></li>
-                    <li><a href="lottery_log.html?type=1"><i class="fa fa-file-word-o"></i>查看日志</a></li>
-                    <li><a href="lottery_analyze.html?type=1"><i class="fa fa-bar-chart"></i>统计分析</a></li>
+                    <li>
+                        <a href="../lottery/lottery.html?type=1">
+                            <i class="menu-icon fa fa-caret-right"></i> 抽奖活动管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../lottery/lottery_log.html?type=1">
+                            <i class="menu-icon fa fa-caret-right"></i> 查看日志
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../lottery/lottery_analyze.html?type=1">
+                            <i class="menu-icon fa fa-caret-right"></i> 统计分析
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>
-                <a href="#" class="dropdown-toggle"><i class="fa fa-group"></i>师傅端 <b class="arrow fa fa-angle-down"></b></a>
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-double-angle-right"></i> 师傅端 <b class="arrow fa"></b>
+                </a>
+
+                <b class="arrow"></b>
 
                 <ul class="submenu nav-hide" style="display: none;">
-                    <li><a href="lottery.html?type=2"><i class="fa fa-legal"></i>抽奖活动管理</a></li>
-                    <li><a href="lottery_log.html?type=2"><i class="fa fa-file-word-o"></i>查看日志</a></li>
-                    <li><a href="lottery_analyze.html?type=2"><i class="fa fa-bar-chart"></i>统计分析</a></li>
+                    <li>
+                        <a href="../lottery/lottery.html?type=2">
+                            <i class="menu-icon fa fa-caret-right"></i> 抽奖活动管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../lottery/lottery_log.html?type=2">
+                            <i class="menu-icon fa fa-caret-right"></i> 查看日志
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../lottery/lottery_analyze.html?type=2">
+                            <i class="menu-icon fa fa-caret-right"></i> 统计分析
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
     </li>
+
+    <li class="">
+        <a href="" class="dropdown-toggle">
+            <i class="menu-icon fa fa-tachometer"></i> <span class="menu-text"> 营销管理 </span><i class="arrow fa"></i>
+        </a>
+
+        <ul class="submenu">
+            <li>
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-double-angle-right"></i> 净水器 <b class="arrow fa"></b>
+                </a>
+                <b class="arrow"></b>
+
+                <ul class="submenu nav-hide" style="display: none;">
+                    <li>
+                        <a href="../waterCleaner/setting.html">
+                            <i class="menu-icon fa fa-caret-right"></i> 设置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../waterCleaner/orderManager.html">
+                            <i class="menu-icon fa fa-caret-right"></i> 订单管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../waterCleaner/incomeAndExpenses.html">
+                            <i class="menu-icon fa fa-caret-right"></i> 收支明细
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../waterCleaner/gatherStatistics.html">
+                            <i class="menu-icon fa fa-caret-right"></i> 订单收款统计
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
 </ul>
+
 <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
     <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 </div>
@@ -120,4 +109,37 @@
         ace.settings.check('sidebar', 'collapsed')
     } catch (e) {
     }
+
+    // 左边栏菜单收缩，箭头方向改变
+    function menuToggleEvent(){
+
+        var _dropDownToggleArr = $('.dropdown-toggle');// 所有有 下拉菜单的 菜单项
+
+        for( var i=0; i < _dropDownToggleArr.length; i++ ){
+
+            var $temp = _dropDownToggleArr.eq(i);
+
+            //if( $temp.nextAll('.submenu').is(':visible') ){
+            if( $temp.parent('li').is('.open') ){ // 父亲<li> 展开
+                $temp.children('.arrow').removeClass('fa-angle-right').addClass('fa-angle-down');
+            }else{
+                $temp.children('.arrow').removeClass('fa-angle-down').addClass('fa-angle-right');
+            }
+        }
+
+        (function($){
+
+            var _dropDownToggleArr = $('.dropdown-toggle');
+            _dropDownToggleArr.each( function(){
+                $(this).click( function(){
+                    // 延迟一段时间，等到动画结束后再改变箭头方向
+                    setTimeout( menuToggleEvent, 100 );// 左边栏菜单收缩，箭头方向改变
+                });
+            })
+
+        })( jQuery );
+    }
+
+
+
 </script>

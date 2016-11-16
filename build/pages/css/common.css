@@ -15,8 +15,7 @@ body { font-family: '微软雅黑', 'Helvetica Neue', sans-serif, SimHei; }
 /**
  * 正在加载中动画
  */
-.loader { position: fixed; left: 50%; top: 50%;
-}
+.loader { position: fixed; left: 50%; top: 50%;  z-index: 1000000;}
 @-webkit-keyframes line-scale {
     0% { -webkit-transform: scaley(1); transform: scaley(1); }
     50% { -webkit-transform: scaley(0.4); transform: scaley(0.4); }
@@ -83,4 +82,163 @@ td.max-title-td a {
 }
 .prevBtn span, .pageNum span, .nextBtn span {
     cursor: pointer;
+}
+
+/*icely add*/
+
+body, html{
+    margin: 0px;
+    height: 100%;
+}
+
+/* 修改 页面样式 */
+.breadcrumbs{
+    border-bottom: none;
+    background: inherit;
+    padding-top: 1%;
+}
+.main-content-inner{
+    background: #ffffff;
+}
+.page-content{
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 1% 2%;
+    padding: 0%;
+}
+.page-content .page-header{
+    background: rgb(74,144,226);
+    font-size: 16px;
+    color: #ffffff;
+    padding: 0.6% 1%;
+    margin: 0px;
+    overflow: hidden;
+}
+.page-content .page-header > i{
+    margin-right: 0.5%;
+    font-size: inherit;
+}
+.page-content .page-header > .operatorBtn{
+    float: right;
+    background: inherit;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 5px;
+    padding: 0.1% 1.5%;
+    cursor: pointer;
+}
+.page-content .page-body{
+    padding: 1%;
+}
+.page-content .page-body form.form-inline{
+    margin-bottom: 1.5%;
+}
+
+/*表格纵向斑马*/
+.verticalStriped{
+    background: rgb(223,238,254);
+}
+
+/*表格内部按钮*/
+.tableInnerBtn{
+    margin-right: 5px;
+    padding: 1px 5px;
+}
+
+/* input错误提醒*/
+input.errorTip::-webkit-input-placeholder{
+    color: red;
+}
+
+/* 弹框默认宽度 */
+.modal-dialog{
+    width: 50%
+}
+.modal-lg{
+    width: 85%;
+}
+.modal-footer{
+    border: none;
+    background: inherit;
+}
+
+/* 弹框默认高度 */
+.bootbox.modal,
+.modal-dialog.modal-lg{
+    height: 100%;
+    overflow: hidden;
+}
+.modal-content{
+    height: 90%;
+    overflow: hidden;
+}
+.modal-content .modal-header{
+    height: 10%;
+}
+.modal-content .modal-body{
+    height: 90%;
+}
+.modal-content .modal-body .bootbox-body{
+    max-height: 100%;
+    overflow-y: scroll;
+    /* $('iframe').parents('.bootbox-body').css('overflow-y', 'visible'); */
+}
+
+
+
+/*通用模块*/
+body{
+    font-size: 15px;
+    line-height: 150%;
+}
+
+/*只读输入框*/
+[readonly='readonly']{
+    cursor: not-allowed !important;
+}
+
+input[type=text],
+input[type=date],
+input[type=number],
+select{
+    width: 100%;
+}
+input[type=date]{
+    padding: 0px;
+}
+a{
+    text-decoration: none !important;
+    cursor: pointer;
+}
+iframe{
+    border: none;
+}
+
+/*浮动*/
+.floatLeft{
+    float: left;
+}
+.floatRight{
+    float: right;
+}
+
+/*字体方向*/
+.textAlignCenter{
+    text-align: center;
+}
+.textAlignRight{
+    text-align: right;
+}
+
+.textAlignLeft{
+    text-align: left;
+}
+
+/*颜色*/
+.red{
+    color: red;
+}
+.green{
+    color: green;
 }

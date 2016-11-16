@@ -5,12 +5,14 @@ var momo = (function () {
 
         //初始化页面设置，添加头部，添加侧边栏,计算baseURL
         initPage: function () {
+
             //加载头部和左侧菜单
             Example.init({"selector": ".bb-alert"});
             $("body").append("<div class='loader' style='display: none;'><div class='loader-inner line-scale'><div></div><div></div><div></div><div></div><div></div></div></div>");//正在加载提示
-            $("#header").load('iframe/header.html');
+            $("#header").load('../iframe/header.html');
 
             // icely add （左边菜单 height 满屏）
+            /*
             $(window).load( setMenuHeight );
             $(document).scroll( setMenuHeight );
             function setMenuHeight(){
@@ -19,21 +21,25 @@ var momo = (function () {
                 //console.log(_height);
                 $('#sidebar').css( 'height', _height + 'px' );
             }
+            */
 
-            $("#sidebar").load('iframe/sidebar.html', function () { //侧栏页面打开
+            $("#sidebar").load('../iframe/sidebar.html', function () { //侧栏页面打开
                 //获取左侧菜单a，并判断是否匹配
                 function sidebarList() {
-                    var aList = $('#sidebar a');
+                    var aList = $('#sidebar a:not(".dropdown-toggle")');
+                    //console.log( pageName );
                     for (var i = 0, length = aList.length; i < length; i++) {
                         var aItem = aList.eq(i); //获取a标签的href
                         var aHref = aItem.attr("href"); //获取a标签的href
-                        if (pageName.indexOf(aHref) != -1) {
+                        //console.log( aHref );
+                        if (aHref.indexOf(pageName) != -1) {
                             aItem.parents('li').addClass('open');
                             aItem.parents('ul').show();
+                            menuToggleEvent();// 左边栏菜单收缩，箭头方向改变
 
                             // icely add 选中的菜单项设置背景色
-                            $('#sidebar .active').removeClass('active');
-                            aItem.addClass('active');
+                            //$('#sidebar .active').removeClass('active');
+                            //aItem.addClass('active');
                         }
                     }
                 }
@@ -74,27 +80,43 @@ var momo = (function () {
         },
 
         //发送post请求
-        sendPost: function (body, url, success, isGet) {
+        sendPost: function (body, url, successFunc, errFunc, isGet) {
             var way = "POST";
             if (isGet)way = "GET";
+            //console.log(JSON.stringify(body));
+            //console.log(this.baseURL + url);
+
             $(".loader").show();
-            console.log(JSON.stringify(body));
-            console.log(this.baseURL + url);
             $.ajax({
                 type: way,
                 data: body,
                 dataType: "JSON",
                 url: this.baseURL + url,
+                timeout: 3000,
                 success: function (data) {
-                    $(".loader").hide();
-                    console.log(data);
-                    if (data.errcode == 10000)window.location.href = './login.html';
-                    success(data);
+                     $(".loader").hide();
+                    //console.log(data);
+
+                    if ( data.errcode != 0 ){ // 不成功（成功：errcode == 0 ）
+                        $('body').trigger('postError');// 发送一个事件
+                    }
+
+                    if (data.errcode == 10000) window.location.href = './login.html';
+
+                    if( successFunc ) successFunc( data );
+                    $('body').trigger('postSuccess');// 发送一个事件
                 },
                 error: function (data) {
                     $(".loader").hide();
-                    console.log("error ");
-                    console.log(data);
+                    //console.log(data);
+
+                    if( errFunc ) errFunc();
+                    $('body').trigger('postError');// 发送一个事件
+                },
+                complete: function( XMLHttpRequest, status ){ // 请求超时
+                    if( status == 'timeout'){
+                        alert('当前网络不佳，请稍后重试！');
+                    }
                 }
             });
         },
@@ -348,6 +370,7 @@ var momo = (function () {
             $(document).on("click", "#download", function () {
                 console.log("download   " + momo.baseURL + url);
                 console.log(JSON.stringify(this.otherElem));
+
                 var fromDom = document.createElement("form");
                 if (this.otherElem) for (var p in this.otherElem) {
                     var inputDom = document.createElement("input");
@@ -358,6 +381,12 @@ var momo = (function () {
                 fromDom.method = "post";
                 fromDom.action = momo.baseURL + url;
                 fromDom.submit();
+
+                //var $form = $('<form method="post" action="' + momo.baseURL + url + '"></form>');
+                //var _html = $( document.forms['searchForm'] ).html();
+                //$form.append( _html );
+                //$form.submit();
+
             }.bind(this));
         },
 
@@ -372,7 +401,16 @@ var momo = (function () {
 
         //字符输入字数约束
         inputText: function (item, max) {
-            $(document).on("keydown", item, function () {
+
+            // 输入框 获取焦点的时候，设置 输入字数限制
+            $(document).on('focus', item, function(){
+                $(this).attr('maxlength', max);
+            });
+
+            /*
+            $(document).on("keydown", item, function ( e ) {
+                //console.log( e.keyCode );
+                if( e.keyCode == 9 || e.keyCode == 8 ) return; // tab键、删除键
                 var value = $(this).val();
                 if (!(value.length < max))$(this).val(value.substr(0, max - 1));
             });
@@ -380,6 +418,7 @@ var momo = (function () {
                 var value = $(this).val();
                 if (!(value.length < max))$(this).val(value.substr(0, max));
             });
+            */
         },
 
         //JS模板
@@ -487,6 +526,51 @@ var momo = (function () {
             if (type == "day")return parseInt(space / (1000 * 60 * 60 * 24));
         },
 
+        // icely add
+
+        //垂直居中显示
+        verticalMiddle: function ( $parent, $children ){
+            var _top = ( $parent.height() - $children.height() ) / 2;
+            $children.css( 'margin-top', _top + 'px' );
+        },
+
+        // 判断是否没数据（数据为空、null、undefined）
+        isNoData: function( val ){
+            val = $.trim( val ); // 去掉字符串首尾空格
+            return ( val == ''  ||  val == null  || val == undefined );
+        },
+
+        // 输入限制 是整数（参数：.class / #id）
+        inputIntNum: function( str ){
+            $(document).on('change', str, function(){
+                $(this).val( Math.floor( $(this).val() ) );// 向下取整
+            });
+        },
+
+        // 输入限制，保留两位小数（参数：.class / #id）
+        inputToFixed2: function( str ){
+            $(document).on('change', str, function(){
+                var _val = parseFloat( $(this).val() ).toFixed(2);
+                $(this).val( _val );
+            });
+        },
+
+        // 显示提示语（2秒后消失）
+        showTip: function( tipContent ){
+
+            $('.tipDiv').remove();// 移除 已存在的提示语
+
+            var $tip = $( '<div class="tipDiv"> <div class="tipContent">' +  tipContent + '</div> </div>' );
+            $('body').append( $tip );// 显示
+            momo.verticalMiddle( $('.tipContent').parent('.tipDiv'), $('.tipContent') );// 垂直居中
+
+            $tip.fadeOut(0).fadeIn(250);// 显示 动画效果
+            $tip.trigger('tipShow');// 发送一个事件（操作成功）
+
+            setTimeout(function(){
+                $tip.fadeOut(250); // 隐藏
+            }, 1000);
+        },
     }
 })();
 

@@ -1,0 +1,39 @@
+div.uploadDiv, /* Ñ¡ÔñÍ¼Æ¬ div */
+div.imgBox{ /* Í¼Æ¬Ô¤ÀÀ box */
+    width: 130px;
+    height: 130px;
+    margin-right: 10px;
+
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+div.uploadDiv > .uploadBtn, /* Ñ¡ÔñÍ¼Æ¬ input/img */
+div.imgBox > img{ /* Í¼Æ¬Ô¤ÀÀ img */
+    width: 90%;
+    height: 90%;
+    margin-top: 10%;
+}
+
+/* Ñ¡ÔñÍ¼Æ¬ input */
+div.uploadDiv input[type=file].uploadBtn {
+    position: absolute;
+    opacity: 0; /*²»ÏÔÊ¾*/
+    cursor: pointer;
+}
+
+/* Í¼Æ¬Ô¤ÀÀ ÒÆ³ýÍ¼Æ¬°´Å¥ */
+div.imgBox > .removeImg{
+    padding: 0px 5px;
+    color: #ffffff;
+    background: red;
+    border-radius: 100%;
+    -moz-box-shadow: 2px 2px 2px #888888; /* ÀÏµÄ Firefox */
+    box-shadow: 2px 2px 2px #888888;
+    cursor: pointer;
+
+    position: absolute;
+    top: 0px;
+    right: 3px;
+}

@@ -1,0 +1,335 @@
+<!--<body class="no-skin" onload="sessionStorage._type='2';init()">-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>师傅之家</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../../ace/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../ace/assets/font-awesome/4.2.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../../ace/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="../../ace/assets/css/daterangepicker.min.css"/>
+    <!--日期选择插件-->
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <!--公共css-->        <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../../ace/assets/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <link rel="stylesheet" href="../../ace/assets/css/ace-ie.min.css"/>        <![endif]-->
+
+    <!--icely add-->
+    <link rel="stylesheet" href="../css/myStyle.css"/>
+    <link rel="stylesheet" href="../myPlugins/loading/loading.css"/>
+    <link rel="stylesheet" href="../myPlugins/upLoadImg/upLoadImg.css"/>
+    <link rel="stylesheet" href="../myPlugins/showBigImg/showBigImg.css"/>
+    <link href="../myPlugins/jqGrid/jqGrid/jqGrid.css" rel="stylesheet" type="text/css">
+
+    <!-- ace 设置处理程序 -->
+    <script src="../../ace/assets/js/ace-extra.min.js"></script>
+    <!--[if lte IE 8]>
+    <script src="../../ace/assets/js/html5shiv.min.js"></script>
+    <script src="../../ace/assets/js/respond.min.js"></script>        <![endif]-->
+
+</head>
+
+<style>
+    .dataList .row{
+        margin-top: 0.5%;
+    }
+    .dataList .row >  .col-md-1{
+        padding: 0%;
+        margin: 0%;
+    }
+    .marginLeft{
+        margin-left: 20px;
+    }
+    .borderBottom{
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* 取消订单 模态框 */
+    .deleteOrderModalContent > .row{
+        margin: 2% 0%;
+    }
+    .deleteOrderModalContent > .row input{
+        width: 100%;
+    }
+    .deleteOrderModalContent > .row input[type=date]{
+        padding: 0px;
+        line-height: 220%;;
+    }
+
+    /* 取消订单 图片 */
+    .deleteOrderModalContent div.uploadDiv, /* 选择图片 div */
+    .deleteOrderModalContent div.imgBox,
+    .deleteOrderModalContent .smallPic{
+        width: 100px;
+        height: 100px;
+    }
+    .deleteOrderModalContent .smallPic{
+        margin: 8px 5px;
+        cursor: pointer;
+    }
+
+</style>
+
+<body class="no-skin" onload="init()">
+<!--顶部header占位符-->
+<div id="header"></div>
+<!--内容容器-->
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <div id="sidebar" class="sidebar responsive"></div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!--内容区的顶部路径栏-->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        营销管理
+                    </li>
+                    <li>净水器</li>
+                    <li>订单管理</li>
+                </ul>
+            </div>
+
+            <div class="page-content">
+
+                <div class="page-header">
+                    <i class="fa fa-table"></i>订单列表
+                    <a id="download" class="operatorBtn">导出</a>
+                </div>
+
+                <div class="page-body">
+
+                    <!-- 搜索框 -->
+                    <form name="searchForm" class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="sr-only" for="searchInput">searchInput</label>
+                            <input id="searchInput" type="text" placeholder="输入单号/客户名称/手机号/地址"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group" style="width: 250px">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input id="searchTime" class="form-control" placeholder="开始时间-结束时间" type="text" name="date-range-picker" id="id-date-range-picker-1"/>
+                            </div>
+                        </div>
+
+                    <!--
+                        <div class="form-group">
+                            <label class="sr-only" for="searchProvince">searchProvince</label>
+                            <select class="form-control selectProvince" id="searchProvince"></select>
+
+                            <label class="sr-only" for="searchCity">searchCity</label>
+                            <select class="form-control selectCity" id="searchCity"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="searchType">searchType</label>
+                            <select class="form-control" id="searchType">
+                                <option value="0" style="display: none" selected>订单类型</option>
+                                <option value="0">全部</option>
+                                <option value="1">领取</option>
+                                <option value="2">更换</option>
+                                <option value="3">维修</option>
+                            </select>
+                        </div>
+                    -->
+
+                        <div class="form-group">
+                            <label class="sr-only" for="searchDay">searchDay</label>
+                            <input id="searchDay" type="text" placeholder="服务完成时间至今天数"/>
+                        </div>
+
+                        <div class="searchBtn btn btn-sm btn-primary width80">查询</div>
+                        <div class="resetBtn btn btn-sm btn-inverse width80">重置</div>
+                    </form>
+
+                    <!--icely 表格-->
+                    <div id="jqGrid" class="jqGrid jqGrid-center jqGrid-stripe"></div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i></a>
+<!-- /.main-container -->
+
+
+<!-- 订单详情 模块-->
+<script type="text/template" id="detailModal">
+
+    <div style="margin: 0.5%; overflow: hidden;">
+        <span class="red floatLeft">单号：<span class="order_num"></span>【<span class="service_status"></span>】</span>
+        <button class="floatRight btn btn-sm btn-primary width80 openDeleteOrderModalBtn">取消订单</button>
+    </div>
+
+    <!--订单内容-->
+    <table class="table table-striped table-bordered table-hover dataTable textAlignCenter">
+        <thead>
+        <tr>
+            <th class="textAlignCenter">序号</th>
+            <th class="textAlignCenter">项目</th>
+            <th class="textAlignCenter">数量</th>
+            <th class="textAlignCenter">单价</th>
+            <th class="textAlignCenter">小计金额</th>
+        </tr>
+        </thead>
+        <tbody id="orderTbody"></tbody>
+    </table>
+
+    <!--表格下方数据-->
+    <div class="dataList" style="padding: 1% 2%; border: 1px solid rgba(0,0,0,0.1);">
+        <div class="row">
+            <div class="col-md-6">付款方式：<span class="marginLeft payment_code"></span></div>
+            <div class="col-md-6">订单金额：<span class="marginLeft total"></span></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">支付状态：<span class="marginLeft red payment_status"></span></div>
+            <div class="col-md-6">净水器免费：<span class="marginLeft reduce"></span></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">支付方式：<span class="marginLeft red payment_type"></span></div>
+            <div class="col-md-6">实付金额：<span class="marginLeft red actually_total"></span></div>
+        </div>
+
+    </div>
+
+    <!--人物信息-->
+    <div class="dataList" style="margin: 2% 3%;">
+
+        <div class="row">
+            <div class="col-md-1 textAlignRight">姓名：</div>
+            <div class="col-md-11 borderBottom shipping_name"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 textAlignRight">手机号：</div>
+            <div class="col-md-11 borderBottom shipping_tel"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 textAlignRight">安装地址：</div>
+            <div class="col-md-11 borderBottom shipping_addr"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 textAlignRight">下单日期：</div>
+            <div class="col-md-11 borderBottom add_time"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 textAlignRight">备注信息：</div>
+            <div class="col-md-11 borderBottom">
+                <span class="remark floatLeft"></span>
+                <input class="remark floatLeft" style="width: 85%">
+
+                <a class="btn btn-xs btn-primary tableInnerBtn floatRight remarkEdit">编辑</a>
+                <a class="btn btn-xs btn-primary tableInnerBtn floatRight remarkSave">保存</a>
+                <a class="btn btn-xs btn-default tableInnerBtn floatRight remarkCancel">取消</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!--日志-->
+    <button id='logToggleBtnId' style="margin: 1% 0%;">收起日志</button>
+    <div id="logTableId">
+        <table class="table table-striped table-bordered table-hover dataTable textAlignCenter">
+            <thead>
+            <tr>
+                <th class="textAlignCenter">时间</th>
+                <th class="textAlignCenter">类别</th>
+                <th class="textAlignCenter">内容</th>
+            </tr>
+            </thead>
+            <tbody id="logTbody"></tbody>
+        </table>
+    </div>
+
+</script>
+
+<!-- 取消订单 模块-->
+<script type="text/template" id="deleteOrderModal">
+
+    <div class="deleteOrderModalContent">
+
+        <div class="row">
+            <div class="col-md-3 textAlignRight">添加打款记录</div>
+            <div class="col-md-8"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 textAlignRight">付款日期：</div>
+            <div class="col-md-8"> <input type="date" class="deleteOrder_pay_time"> </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 textAlignRight">转账金额：</div>
+            <div class="col-md-8"> <input type="text" class="deleteOrder_total" readonly="readonly"> </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 textAlignRight">备注：</div>
+            <div class="col-md-8"> <input type="text" class="deleteOrder_remark"> </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 textAlignRight">上传凭证：</div>
+            <div class="col-md-8" id="deleteOrderImg">（建议上传订单付款凭证，如汇款单等等；附件支持JPG\PNG\Word\Excel\Txt格式，大小不超过4M）<br/> </div>
+        </div>
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-12 textAlignCenter">
+                <button class="btn btn-sm btn-primary width80 deleteOrder">取消订单</button>
+            </div>
+        </div>
+
+    </div>
+</script>
+
+<!-- bootstrap -->
+<script src="../../ace/assets/js/jquery.1.11.1.min.js"></script>
+<script src="../../ace/assets/js/bootstrap.min.js"></script>
+<!-- 日期选择插件 -->
+<script src="../../ace/assets/js/moment.min.js"></script>
+<script src="../../ace/assets/js/daterangepicker.min.js"></script>
+<!-- ACE 基本JS -->
+<script src="../../ace/assets/js/ace-elements.min.js"></script>
+<script src="../../ace/assets/js/ace.min.js"></script>
+<script src="../js/libs/hint.js"></script>
+<script src="../../ace/assets/js/bootbox.min.js"></script>
+<!-- 公共JS -->
+<script src="../js/momo.js"></script>
+
+
+<!--icely add-->
+<script src="../myPlugins/jqGrid/jqGrid/jqGrid.js"></script>
+<script src="../myPlugins/loading/loading.js"></script>
+<script src="../myPlugins/selectCity.js"></script>
+<script src="../myPlugins/upLoadImg/upLoadImg.js"></script>
+<script src="../myPlugins/showBigImg/showBigImg.js"></script>
+<script src="orderManager.js"></script>
+
+</body>
+</html>

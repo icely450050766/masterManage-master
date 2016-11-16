@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="showBigImg.css" rel="stylesheet" type="text/css">
+
+    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="showBigImg.js"></script>
+
+    <style>
+        img.smallPic{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="showBigImgDiv">
+    <img class="smallPic" src="img/file.png">
+    <img class="smallPic" src="img/image-1.jpg">
+    <img class="smallPic" src="img/addPictureBtn.png">
+</div>
+
+<div class="showBigImgDiv1">
+    <img class="smallPic" src="img/addPictureBtn.png">
+</div>
+
+<script>
+    showBigImg.init( $('.showBigImgDiv') );
+    showBigImg.init( $('.showBigImgDiv1') );
+</script>
+</body>
+</html>
